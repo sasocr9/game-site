@@ -5,8 +5,7 @@ function useFetch(api) {
   const [loading, setLoading] = useState(false);
 
 
-  const apiUrl = import.meta.env.MODE === "development" ? "/api" : "/api/proxy";
-
+  const apiUrl = import.meta.env.MODE === "development" ? "/api" : "https://circumvent-cors.herokuapp.com/https://api.igdb.com/v4";
 
   useEffect(() => {
     const fetchGames = async () => {
@@ -38,7 +37,7 @@ function useFetch(api) {
     };
 
     fetchGames();
-  }, [api]);
+  }, [api,apiUrl]);
 
   return { data, loading };
 }

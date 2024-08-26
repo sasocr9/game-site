@@ -10,7 +10,7 @@ const Search = () => {
   const [searchedGames, setSearchedGames] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const apiUrl = import.meta.env.MODE === "development" ? "/api" : "/api/proxy";
+  const apiUrl = import.meta.env.MODE === "development" ? "/api" : "https://circumvent-cors.herokuapp.com/https://api.igdb.com/v4";
 
   useEffect(() => {
     const fetchGames = async () => {
@@ -33,7 +33,7 @@ const Search = () => {
       }
     };
     fetchGames();
-  }, [queryTerm]);
+  }, [apiUrl,queryTerm]);
 
   useTitle(`Search result for ${queryTerm}`);
 

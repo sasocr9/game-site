@@ -10,9 +10,10 @@ const GameDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const apiUrl = import.meta.env.MODE === "development" ? "/api" : "/api/proxy";
-
-
+  const apiUrl =
+    import.meta.env.MODE === "development"
+      ? "/api"
+      : "https://circumvent-cors.herokuapp.com/https://api.igdb.com/v4";
 
   useEffect(() => {
     const fetchGame = async () => {
@@ -47,7 +48,7 @@ const GameDetail = () => {
     };
 
     fetchGame();
-  }, [id]);
+  }, [apiUrl,id]);
 
   const { cover, rating, slug } = game;
 
@@ -88,7 +89,7 @@ const GameDetail = () => {
     if (genreIds.length > 0) {
       fetchGenre();
     }
-  }, [genreIds]);
+  }, [genreIds,apiUrl]);
 
   const renderStars = (rating) => {
     const maxStars = 5;
