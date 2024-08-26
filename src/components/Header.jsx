@@ -27,6 +27,7 @@ const Header = () => {
     e.preventDefault();
     const queryTerm = e.target.search.value;
     e.target.reset();
+    setIsNavbarOpen(false);
 
     return navigate(`/search?q=${queryTerm}`);
   };
@@ -54,7 +55,10 @@ const Header = () => {
             </span>
           </Link>
 
-          <div id="mobile-nav" className="flex justify-end w-2 sm:order-2 gap-2 sm:justify-normal sm:w-auto sm:gap-4">
+          <div
+            id="mobile-nav"
+            className="flex justify-end w-2 sm:order-2 gap-2 sm:justify-normal sm:w-auto sm:gap-4"
+          >
             <button
               id="theme-toggle"
               type="button"
