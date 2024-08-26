@@ -13,7 +13,7 @@ const GameDetail = () => {
   const apiUrl =
     import.meta.env.MODE === "development"
       ? "/api"
-      : "https://circumvent-cors.herokuapp.com/https://api.igdb.com/v4";
+      : "https://fast-dawn-89938.herokuapp.com/https://api.igdb.com/v4";
 
   useEffect(() => {
     const fetchGame = async () => {

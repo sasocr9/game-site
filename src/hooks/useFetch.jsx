@@ -5,7 +5,7 @@ function useFetch(api) {
   const [loading, setLoading] = useState(false);
 
 
-  const apiUrl = import.meta.env.MODE === "development" ? "/api" : "https://circumvent-cors.herokuapp.com/https://api.igdb.com/v4";
+  const apiUrl = import.meta.env.MODE === "development" ? "/api" : "https://fast-dawn-89938.herokuapp.com/https://api.igdb.com/v4";
 
   useEffect(() => {
     const fetchGames = async () => {
