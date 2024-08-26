@@ -11,7 +11,7 @@ const Search = () => {
   const [loading, setLoading] = useState(false);
 
   const proxyUrl = "https://cors-anywhere.herokuapp.com/";
-  const apiUrl = "https://api.igdb.com/v4/games";
+  const apiUrl = "https://api.igdb.com/v4";
   const url = `${proxyUrl}${apiUrl}`;
 
   const urlApi = import.meta.env.MODE === "development" ? "/api" : url;
