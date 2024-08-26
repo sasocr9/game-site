@@ -49,7 +49,7 @@ const Header = () => {
             className="flex items-center space-x-3 rtl:space-x-reverse"
           >
             <img src={Logo} alt="GameFiesta Logo" className="h-14" />
-            <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+            <span className="self-center text-xl sm:text-2xl font-semibold whitespace-nowrap dark:text-white">
               GameFiesta
             </span>
           </Link>
