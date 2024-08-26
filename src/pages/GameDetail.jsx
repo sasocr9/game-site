@@ -10,15 +10,16 @@ const GameDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const apiUrl =
-    import.meta.env.MODE === "development"
-      ? "/api"
-      : "https://fast-dawn-89938.herokuapp.com/https://api.igdb.com/v4";
+  const proxyUrl = "https://cors-anywhere.herokuapp.com/";
+  const apiUrl = "https://api.igdb.com/v4/games";
+  const url = `${proxyUrl}${apiUrl}`;
+
+  const urlApi = import.meta.env.MODE === "development" ? "/api" : url;
 
   useEffect(() => {
     const fetchGame = async () => {
       try {
-        const response = await fetch(`${apiUrl}/games`, {
+        const response = await fetch(`${urlApi}/games`, {
           method: "POST",
           headers: {
             "Client-ID": import.meta.env.VITE_TWITCH_CLIENT_ID,
@@ -48,7 +49,7 @@ const GameDetail = () => {
     };
 
     fetchGame();
-  }, [apiUrl,id]);
+  }, [urlApi,id]);
 
   const { cover, rating, slug } = game;
 
@@ -61,7 +62,7 @@ const GameDetail = () => {
   useEffect(() => {
     const fetchGenre = async () => {
       try {
-        const response = await fetch(`${apiUrl}/genres`, {
+        const response = await fetch(`${urlApi}/genres`, {
           method: "POST",
           headers: {
             "Client-ID": import.meta.env.VITE_TWITCH_CLIENT_ID,
@@ -89,7 +90,7 @@ const GameDetail = () => {
     if (genreIds.length > 0) {
       fetchGenre();
     }
-  }, [genreIds,apiUrl]);
+  }, [genreIds,urlApi]);
 
   const renderStars = (rating) => {
     const maxStars = 5;

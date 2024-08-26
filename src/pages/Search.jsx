@@ -10,13 +10,17 @@ const Search = () => {
   const [searchedGames, setSearchedGames] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const apiUrl = import.meta.env.MODE === "development" ? "/api" : "https://fast-dawn-89938.herokuapp.com/https://api.igdb.com/v4";
+  const proxyUrl = "https://cors-anywhere.herokuapp.com/";
+  const apiUrl = "https://api.igdb.com/v4/games";
+  const url = `${proxyUrl}${apiUrl}`;
+
+  const urlApi = import.meta.env.MODE === "development" ? "/api" : url;
 
   useEffect(() => {
     const fetchGames = async () => {
       setLoading(true);
       try {
-        const response = await fetch(`${apiUrl}/games`, {
+        const response = await fetch(`${urlApi}/games`, {
           method: "POST",
           headers: {
             "Client-ID": import.meta.env.VITE_TWITCH_CLIENT_ID,
