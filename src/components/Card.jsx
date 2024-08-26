@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const Card = ({ game }) => {
   const { id,name, cover, first_release_date: date, summary } = game;
   const mediumImageUrl =
-    cover?.url.replace("/t_thumb/", "/t_cover_big/") ||
+    cover?.url.replace("/t_thumb/", "/t_720p/") ||
     "https://via.placeholder.com/600";
 
   return (
