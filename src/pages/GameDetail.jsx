@@ -15,7 +15,7 @@ const GameDetail = () => {
   useEffect(() => {
     const fetchGame = async () => {
       try {
-        const response = await fetch("https://proxy.cors.sh/https://api.igdb.com/v4/games", {
+        const response = await fetch("https://fuckcors.app/https://api.igdb.com/v4/games", {
           method: "POST",
           headers: {
             "Client-ID": import.meta.env.VITE_TWITCH_CLIENT_ID,
@@ -58,7 +58,7 @@ const GameDetail = () => {
   useEffect(() => {
     const fetchGenre = async () => {
       try {
-        const response = await fetch("https://proxy.cors.sh/https://api.igdb.com/v4/genres", {
+        const response = await fetch("https://fuckcors.app/https://api.igdb.com/v4/genres", {
           method: "POST",
           headers: {
             "Client-ID": import.meta.env.VITE_TWITCH_CLIENT_ID,

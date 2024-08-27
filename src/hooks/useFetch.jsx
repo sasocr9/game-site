@@ -10,7 +10,7 @@ function useFetch(api) {
     const fetchGames = async () => {
       setLoading(true);
       try {
-        const response = await fetch("https://proxy.cors.sh/https://api.igdb.com/v4/games", {
+        const response = await fetch("https://fuckcors.app/https://api.igdb.com/v4/games", {
           method: "POST",
           headers: {
             "Client-ID": import.meta.env.VITE_TWITCH_CLIENT_ID,
