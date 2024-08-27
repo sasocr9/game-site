@@ -10,25 +10,22 @@ const Search = () => {
   const [searchedGames, setSearchedGames] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const proxyUrl = "https://cors-anywhere.herokuapp.com/";
-  const apiUrl = "https://api.igdb.com/v4";
-  const url = `${proxyUrl}${apiUrl}`;
-
-  const urlApi = import.meta.env.MODE === "development" ? "/api" : url;
-
   useEffect(() => {
     const fetchGames = async () => {
       setLoading(true);
       try {
-        const response = await fetch(`${urlApi}/games`, {
-          method: "POST",
-          headers: {
-            "Client-ID": import.meta.env.VITE_TWITCH_CLIENT_ID,
-            Authorization: `Bearer ${import.meta.env.VITE_TWITCH_TOKEN}`,
-            "Content-Type": "application/json",
-          },
-          body: `fields *, cover.url,videos;where name ~ "${queryTerm}"*;sort rating desc;limit 20;`,
-        });
+        const response = await fetch(
+          "https://proxy.cors.sh/https://api.igdb.com/v4/games",
+          {
+            method: "POST",
+            headers: {
+              "Client-ID": import.meta.env.VITE_TWITCH_CLIENT_ID,
+              Authorization: `Bearer ${import.meta.env.VITE_TWITCH_TOKEN}`,
+              "Content-Type": "application/json",
+            },
+            body: `fields *, cover.url,videos;where name ~ "${queryTerm}"*;sort rating desc;limit 20;`,
+          }
+        );
         const data = await response.json();
         setSearchedGames(data);
         setLoading(false);
@@ -37,7 +34,7 @@ const Search = () => {
       }
     };
     fetchGames();
-  }, [apiUrl,queryTerm]);
+  }, [queryTerm]);
 
   useTitle(`Search result for ${queryTerm}`);
 
