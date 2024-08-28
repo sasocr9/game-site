@@ -2,15 +2,15 @@ import { useEffect, useState } from "react";
 
 function useFetch(api, ratings) {
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true); // Initialize loading to true
-  const [error, setError] = useState(null); // Add an error state
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchGames = async () => {
-      setLoading(true); // Set loading to true before fetching
+      setLoading(true);
       try {
         const response = await fetch(
-          `https://api.rawg.io/api/games?key=e7a2c988d10249c681feb2bf10cc07df&${api}`
+          `https://api.rawg.io/api/games?key=${import.meta.env.VITE_RAWG_API_KEY}&${api}`
         );
 
         if (!response.ok) {
@@ -21,19 +21,19 @@ function useFetch(api, ratings) {
         const result = await response.json();
         setData(
           result.results.filter(({ ratings_count }) => ratings_count > ratings)
-        ); // Update state with the fetched data
+        );
         console.log(result.results);
       } catch (error) {
-        setError(error.message); // Set error message if an error occurs
+        setError(error.message);
       } finally {
-        setLoading(false); // Set loading to false after fetching
+        setLoading(false);
       }
     };
 
     fetchGames();
-  }, [api, ratings]); // Add year to dependency array if needed
+  }, [api, ratings]);
 
-  return { data, loading, error }; // Return error state along with data and loading
+  return { data, loading, error };
 }
 
 export default useFetch;
