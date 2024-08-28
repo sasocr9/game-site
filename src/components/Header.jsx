@@ -215,6 +215,7 @@ const Header = () => {
                   className={({ isActive }) =>
                     isActive ? activeClass : inactiveClass
                   }
+                  onClick={handleNavbarToggle}
                   end
                 >
                   Home
@@ -226,6 +227,7 @@ const Header = () => {
                   className={({ isActive }) =>
                     isActive ? activeClass : inactiveClass
                   }
+                  onClick={handleNavbarToggle}
                 >
                   Popular
                 </NavLink>
@@ -236,6 +238,7 @@ const Header = () => {
                   className={({ isActive }) =>
                     isActive ? activeClass : inactiveClass
                   }
+                  onClick={handleNavbarToggle}
                 >
                   Top Rated
                 </NavLink>
@@ -246,6 +249,7 @@ const Header = () => {
                   className={({ isActive }) =>
                     isActive ? activeClass : inactiveClass
                   }
+                  onClick={handleNavbarToggle}
                 >
                   Upcoming
                 </NavLink>

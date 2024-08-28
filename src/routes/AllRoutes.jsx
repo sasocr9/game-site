@@ -16,7 +16,6 @@ export const AllRoutes = () => {
     "metacritic=90,97&ordering=-metacritic&dates=2000-06-01,2024-12-31";
   const upcoming = `dates=${today},2025-12-30`;
 
-
   return (
     <div className="dark:bg-darkbg">
       <Routes>
@@ -36,6 +35,7 @@ export const AllRoutes = () => {
           path="games/popular"
           element={
             <GamesList
+              heading="Popular Games"
               api={popular}
               title="GameFiesta || Popular"
               ratings={15}
@@ -45,7 +45,12 @@ export const AllRoutes = () => {
         <Route
           path="games/top"
           element={
-            <GamesList api={top} title="GameFiesta || Top Rated" ratings={15} />
+            <GamesList
+              heading="Top Rated"
+              api={top}
+              title="GameFiesta || Top Rated"
+              ratings={15}
+            />
           }
         />
         <Route path="search" element={<Search />} />
@@ -53,6 +58,7 @@ export const AllRoutes = () => {
           path="games/upcoming"
           element={
             <GamesList
+              heading="Upcoming"
               api={upcoming}
               title="GameFiesta || Upcoming"
               ratings={2}
