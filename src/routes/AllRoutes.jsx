@@ -27,6 +27,7 @@ export const AllRoutes = () => {
               api={latest}
               title="GameFiesta || Home"
               ratings={15}
+              latest={"true"}
             />
           }
         />

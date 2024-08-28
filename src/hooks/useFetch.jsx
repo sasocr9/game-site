@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-function useFetch(api, ratings) {
+function useFetch(api, ratings, latest) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -19,10 +19,14 @@ function useFetch(api, ratings) {
         }
 
         const result = await response.json();
-        setData(
-          result.results.filter(({ ratings_count }) => ratings_count > ratings)
-        );
-        console.log(result.results);
+        let games = result.results.filter(({ ratings_count }) => ratings_count > ratings);
+
+        if (latest) {
+          games = games.sort((a, b) => new Date(b.released) - new Date(a.released));
+        }
+
+        setData(games);
+        console.log(games);
       } catch (error) {
         setError(error.message);
       } finally {
@@ -31,7 +35,7 @@ function useFetch(api, ratings) {
     };
 
     fetchGames();
-  }, [api, ratings]);
+  }, [api, ratings, latest]);
 
   return { data, loading, error };
 }

@@ -3,8 +3,8 @@ import LoadingSpinner from "../components/LoadingSpinner";
 import useFetch from "../hooks/useFetch";
 import useTitle from "../hooks/useTitle";
 
-const GamesList = ({ heading, api, title, ratings }) => {
-  const { data: games, loading } = useFetch(api, ratings);
+const GamesList = ({ heading, api, title, ratings,latest }) => {
+  const { data: games, loading } = useFetch(api, ratings,latest);
 
   useTitle(title);
 
