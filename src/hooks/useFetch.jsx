@@ -10,7 +10,7 @@ function useFetch(api, ratings) {
       setLoading(true);
       try {
         const response = await fetch(
-          `https://api.rawg.io/api/games?key=${import.meta.env.VITE_RAWG_API}&${api}`
+          `https://api.rawg.io/api/games?key=${import.meta.env.VITE_RAWG_API_KEY}&${api}`
         );
 
         if (!response.ok) {
