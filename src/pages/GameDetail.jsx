@@ -6,36 +6,25 @@ import useTitle from "../hooks/useTitle";
 const GameDetail = () => {
   const { id } = useParams();
   const [game, setGame] = useState({});
-  const [genre, setGenre] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
-
 
   useEffect(() => {
     const fetchGame = async () => {
       try {
-        const response = await fetch("https://fuckcors.app/https://api.igdb.com/v4/games", {
-          method: "POST",
-          headers: {
-            "Client-ID": import.meta.env.VITE_TWITCH_CLIENT_ID,
-            Authorization: `Bearer ${import.meta.env.VITE_TWITCH_TOKEN}`,
-            "Content-Type": "application/json",
-          },
-          body: `
-            fields *, cover.url, videos, genres, rating, game_modes.id,rating_count;
-            where id = ${id};
-            sort rating desc;
-            limit 40;
-          `,
-        });
+        const response = await fetch(
+          `https://api.rawg.io/api/games/${id}?key=${
+            import.meta.env.VITE_RAWG_API_KEY
+          }`
+        );
 
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
         const json = await response.json();
-        setGame(json[0]);
+        setGame(json);
+        console.log(json);
       } catch (error) {
         console.error("Error fetching game:", error);
         setError(error.message);
@@ -47,50 +36,9 @@ const GameDetail = () => {
     fetchGame();
   }, [id]);
 
-  const { cover, rating, slug } = game;
-
-  const genreIds = game.genres || [];
-
-  const image =
-    cover?.url.replace("/t_thumb/", "/t_720p/") ||
-    "https://via.placeholder.com/600";
-
-  useEffect(() => {
-    const fetchGenre = async () => {
-      try {
-        const response = await fetch("https://fuckcors.app/https://api.igdb.com/v4/genres", {
-          method: "POST",
-          headers: {
-            "Client-ID": import.meta.env.VITE_TWITCH_CLIENT_ID,
-            Authorization: `Bearer ${import.meta.env.VITE_TWITCH_TOKEN}`,
-            "Content-Type": "application/json",
-          },
-          body: `
-              fields name;
-              where id = (${genreIds.join(",")});
-            `,
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const json = await response.json();
-        setGenre(json);
-      } catch (error) {
-        console.error("Error fetching genres:", error);
-        setError(error.message);
-      }
-    };
-
-    if (genreIds.length > 0) {
-      fetchGenre();
-    }
-  }, [genreIds]);
-
   const renderStars = (rating) => {
     const maxStars = 5;
-    const stars = Math.round((rating / 100) * maxStars);
+    const stars = ((rating ));
     return (
       <div className="flex">
         {[...Array(maxStars)].map((_, index) => (
@@ -119,6 +67,17 @@ const GameDetail = () => {
   };
   useTitle(`${game.name}/ GameFiesta`);
 
+  const {
+    background_image,
+    rating,
+    slug,
+    description_raw,
+    name,
+    genres,
+    publishers,
+    ratings_count,
+  } = game;
+  console.log(publishers);
   return (
     <main>
       {loading ? (
@@ -126,12 +85,12 @@ const GameDetail = () => {
       ) : error ? (
         <p className="text-red-500">Error: {error}</p>
       ) : (
-        <section className="flex justify-around flex-wrap py-5">
-          <div className="max-w-lg flex justify-center">
+        <section className="flex justify-around flex-wrap py-1 gap-1">
+          <div className="max-w-lg flex items-start">
             <img
-              src={image}
-              alt={game.name}
-              className="rounded pt-6 max-w-[90%] object-contain"
+              src={background_image}
+              alt={name}
+              className="rounded h-[50vh] sm:h-[80vh] p-3 pt-6  object-cover"
             />
           </div>
           <div className="max-w-2xl text-gray-700 text-lg dark:text-white text-center sm:text-start">
@@ -142,7 +101,7 @@ const GameDetail = () => {
               <div className="flex items-center my-4 justify-center sm:justify-start">
                 {renderStars(rating)}
                 <span className="ml-2 text-gray-600 dark:text-gray-400 ">
-                  ({Math.round(rating) / 20}) {game.rating_count} Reviews
+                  ({(rating) }) {ratings_count} Reviews
                 </span>
               </div>
             )}
@@ -152,19 +111,34 @@ const GameDetail = () => {
                 {formatDate(game.first_release_date)}
               </p>
             )}
-            <p className="my-4">{game.summary}</p>
-            {genre.length > 0 && (
-              <p className="my-7 flex flex-wrap gap-2">
-                {genre.map(({ id, name }) => (
+            {publishers.length > 0 && (
+              <span key={id} className="font-bold text-orange-500 text-xl">
+                Developers:
+              </span>
+            )}
+
+            {publishers.length > 0 &&
+              publishers.map(({ name }) => (
+                <>
+                  <span className="mr-2 border border-gray-200 rounded bg-slate-700 text-white dark:border-gray-600 p-2 mx-2 text-center">
+                    {name}
+                  </span>
+                </>
+              ))}
+            {genres.length > 0 && (
+              <p className="my-7 flex flex-wrap gap-2 justify-center sm:justify-start">
+                {genres.map(({ id, name }) => (
                   <span
                     key={id}
-                    className="mr-2 border border-gray-200 rounded dark:border-gray-600 p-2"
+                    className="mr-2 border border-gray-200 rounded bg-slate-700 text-white dark:border-gray-600 p-2"
                   >
                     {name}
                   </span>
                 ))}
               </p>
             )}
+            <p className="my-4 line-clamp-[10]">{description_raw}</p>
+
             {slug && (
               <p className="my-4">
                 <a

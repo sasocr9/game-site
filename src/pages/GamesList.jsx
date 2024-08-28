@@ -3,11 +3,10 @@ import LoadingSpinner from "../components/LoadingSpinner";
 import useFetch from "../hooks/useFetch";
 import useTitle from "../hooks/useTitle";
 
-const GamesList = ({ heading, api, name, title }) => {
-  const { data: games, loading } = useFetch(api, name);
+const GamesList = ({ heading, api, title, ratings }) => {
+  const { data: games, loading } = useFetch(api, ratings);
 
   useTitle(title);
-
 
   return (
     <main>
@@ -19,7 +18,7 @@ const GamesList = ({ heading, api, name, title }) => {
             {heading}{" "}
           </h1>
           <div
-            className={`flex justify-start flex-wrap gap-2 ${
+            className={`flex justify-start flex-wrap gap-6 ${
               heading ? "" : "mt-9"
             } other:justify-evenly`}
           >

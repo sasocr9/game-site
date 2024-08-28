@@ -9,25 +9,20 @@ const Search = () => {
   const queryTerm = searchParams.get("q") || "";
   const [searchedGames, setSearchedGames] = useState([]);
   const [loading, setLoading] = useState(false);
+  console.log(queryTerm);
 
   useEffect(() => {
     const fetchGames = async () => {
       setLoading(true);
       try {
         const response = await fetch(
-          "https://fuckcors.app/https://api.igdb.com/v4/games",
-          {
-            method: "POST",
-            headers: {
-              "Client-ID": import.meta.env.VITE_TWITCH_CLIENT_ID,
-              Authorization: `Bearer ${import.meta.env.VITE_TWITCH_TOKEN}`,
-              "Content-Type": "application/json",
-            },
-            body: `fields *, cover.url,videos;where name ~ "${queryTerm}"*;sort rating desc;limit 20;`,
-          }
+          `https://api.rawg.io/api/games?key=${
+            import.meta.env.VITE_RAWG_API_KEY
+          }&search=${queryTerm}`
         );
         const data = await response.json();
-        setSearchedGames(data);
+        setSearchedGames(data.results.filter(({ ratings_count }) => ratings_count > 10));
+        console.log(data.results);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching games:", error);
